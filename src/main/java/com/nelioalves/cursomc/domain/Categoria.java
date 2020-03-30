@@ -18,14 +18,14 @@ public class Categoria implements Serializable {
 	private Integer id;
 	
 	@Column
-	private String categoria;
+	private String nome;
 	
 	public Categoria() {}
 	
 	public Categoria(Integer id, String categoria) {
 		super();
 		this.id = id;
-		this.categoria = categoria;
+		this.nome = categoria;
 	}
 
 	public Integer getId() {
@@ -36,12 +36,12 @@ public class Categoria implements Serializable {
 		this.id = id;
 	}
 
-	public String getCategoria() {
-		return categoria;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setNome(String categoria) {
+		this.nome = categoria;
 	}
 
 	@Override
