@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.services.ClienteService;
-import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 
 
 
@@ -21,7 +20,7 @@ public class ClienteResource {
 	private ClienteService serv;
 
 	@RequestMapping(value = "/{id}",method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<?> find(@PathVariable Integer id) {
 		Cliente obj = serv.buscar(id);
 		return ResponseEntity.ok(obj);
 	}
