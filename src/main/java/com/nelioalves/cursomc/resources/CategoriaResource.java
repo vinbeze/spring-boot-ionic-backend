@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.security.Provider.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
 import com.nelioalves.cursomc.services.CategoriaService;
@@ -25,8 +26,8 @@ public class CategoriaResource {
 	private CategoriaService serv;
 
 	@RequestMapping(value = "/{id}",method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
-		Categoria obj = serv.buscar(id);
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+		Categoria obj = serv.find(id);
 		return ResponseEntity.ok(obj);
 	}
 
@@ -40,6 +41,14 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 		
 
+	}
+
+	@RequestMapping(value = "/{id}",method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id ){
+		obj.setId(id);
+		obj = serv.update(obj);
+
+		return ResponseEntity.noContent().build();
 	}
 		
 }
