@@ -15,6 +15,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import com.nelioalves.cursomc.domain.Categoria;
 import com.nelioalves.cursomc.dto.CategoriaDTO;
 import com.nelioalves.cursomc.services.CategoriaService;
@@ -36,7 +38,8 @@ public class CategoriaResource {
 
 	//resposta http com o corpo vazio
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void>  insert(@RequestBody Categoria obj){
+	public ResponseEntity<Void>  insert(@Valid @RequestBody CategoriaDTO objDto){
+		Categoria obj = serv.fromDTO(objDto);
 		obj = serv.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 					.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -47,7 +50,8 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(value = "/{id}",method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id ){
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO,@PathVariable Integer id ){
+		Categoria obj = serv.fromDTO(objDTO);
 		obj.setId(id);
 		obj = serv.update(obj);
 
