@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.dto.ClienteDTO;
+import com.nelioalves.cursomc.dto.ClienteNewDTO;
 import com.nelioalves.cursomc.services.ClienteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,18 +36,16 @@ public class ClienteResource {
 		Cliente obj = serv.find(id);
 		return ResponseEntity.ok(obj);
 	}
-	//resposta http com o corpo vazio
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void>  insert(@Valid @RequestBody ClienteDTO objDto){
-		Cliente obj = serv.fromDTO(objDto);
-		obj = serv.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("/{id}").buildAndExpand(obj.getId()).toUri();
+	// //resposta http com o corpo vazio
+	// @RequestMapping(method = RequestMethod.POST)
+	// public ResponseEntity<Void>  insert(@Valid @RequestBody ClienteDTO objDto){
+	// 	Cliente obj = serv.fromDTO(objDto);
+	// 	obj = serv.insert(obj);
+	// 	URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+	// 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 
-		return ResponseEntity.created(uri).build();
-		
-
-	}
+	// 	return ResponseEntity.created(uri).build();
+	// }
 
 	@RequestMapping(value = "/{id}",method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO,@PathVariable Integer id ){
@@ -80,6 +79,18 @@ public class ClienteResource {
 		Page<Cliente> list = serv.findPage(page, linesPerPage, orderBy, direction);
 		Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));
 		return ResponseEntity.ok().body(listDto);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void>  insert(@Valid @RequestBody ClienteNewDTO objDto){
+		Cliente obj = serv.fromDTO(objDto);
+		obj = serv.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+		return ResponseEntity.created(uri).build();
+		
+
 	}
 
 		
